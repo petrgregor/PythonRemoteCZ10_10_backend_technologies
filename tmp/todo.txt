@@ -1,0 +1,17 @@
+DONE Odesílání a zobrazování zpráv
+DONE Obrázek do zpráv
+Editování místností
+Private místnosti
+Profil uživatele
+Obrázky do profilu
+Změnit tvar __str__ u message
+Editovat zprávu ?
+Template pro zobrazení obrázku (pro vrácení zpět stačí kamkoliv kliknout)
+Upload více obrázků
+Omezení velikosti souboru při uploadu
+Vyřešit opětovné odeslání formuláře při reload
+Vzhled
+Friend list
+Přístup do místnosti přes kód bez loginu
+Banování místností nebo uživatelů
+Cenzura slov

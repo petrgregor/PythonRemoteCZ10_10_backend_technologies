@@ -1,0 +1,48 @@
+/* common styles */
+body {
+    background: #ccefff;
+}
+
+header {
+    font-size: 40px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+}
+
+.last-item {
+    float: right;
+    margin-right: 40px;
+}
+
+/* room */
+.my-message {
+    border: solid 2px #004666;
+    width: 70%;
+    margin-right: 0;
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+
+.other-message {
+    border: solid 2px #ff4dff;
+    width: 70%;
+    margin-right: auto;
+    margin-left: 0;
+    margin-bottom: 5px;
+}
+
+.message-user {
+    font-weight: bold;
+    font-size: small;
+}
+
+.message-created {
+    font-style: italic;
+    font-size: small;
+}

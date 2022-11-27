@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - {{ room.name }} {% endblock %}
+{% block header %} Chattebox - {{ room.name }} {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h2>Room: {{ room.name }}</h2>
+  <p>Theme: {{ room.theme }}</p>
+  <p>Description: {{ room.description }}</p>
+  <p>Private: {{ room.private }}</p>
+  <p>Owner: {{ room.owner }}</p>
+  <p>Created: {{ room.created }}</p>
+  <p>Updated: {{ room.updated }}</p>
+
+  <form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="body">Message:</label>
+    <!-- <input type="text" id="body" name="body" value=""> -->
+    <textarea name="body" id="body" rows="1" cols="100"></textarea>
+    <input type="file" name="upload" accept="image/*">  <!-- omezujeme se pouze na obrázky -->
+    <input type="submit" value="Send">
+  </form>
+
+  {% for message in messages %}
+    {% if message.user == request.user %}
+      <div class="my-message">
+        <span class="message-user">{{ message.user }}</span>
+        <span class="message-created">{{ message.created }}</span>
+        <div class="message-body">{{ message.body }}</div>
+        {% if message.file %}
+          <a href="{{ message.file }}"><img src="{{ message.file }}" width="50px"></a>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="other-message">
+        <span class="message-user">{{ message.user }}</span>
+        <span class="message-created">{{ message.created }}</span>
+        <div class="message-body">{{ message.body }}</div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% endblock %}

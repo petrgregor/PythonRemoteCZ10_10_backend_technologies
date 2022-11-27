@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - delete {{ room.name }} {% endblock %}
+
+{% block content %}
+  <h2>Delete room:</h2>
+  <p>Do you really want to delete room name: {{ room.name }}?</p>
+  <a href="{% url 'delete_room_yes' room.id %}">YES</a>
+  <a href="{% url 'rooms' %}">NO</a>
+{% endblock %}

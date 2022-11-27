@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'chatterapp/style.css' %}">
+</head>
+<body>
+
+<header>{% block header %} {% endblock %}</header>
+
+<!-- navbar -->
+{% include 'navbar.html' %}
+
+<!-- main -->
+<main>
+          {% block content %}
+          {% endblock %}
+</main>
+
+</body>
+</html>

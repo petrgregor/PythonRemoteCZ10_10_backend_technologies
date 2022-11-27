@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - error {% endblock %}
+{% block header %} Chattebox - error {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  {{ error_message }}
+{% endif %}
+{% endblock %}

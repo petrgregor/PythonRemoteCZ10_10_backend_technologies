@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+  <h2>New room</h2>
+  <form method="post" action="/create_room/">
+    {% csrf_token %}
+    <label for="name">Room name:</label>
+    <input type="text" id="name" name="name" value=""> <br>
+
+    <label for="theme">Theme:</label>
+    <select name="theme" id="theme">
+      {% for theme in themes %}
+        <option value="{{ theme.id }}"> {{ theme.name }} </option>
+      {% endfor %}
+    </select> <br>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" value=""> <br>
+
+    <label for="private">Private:</label>
+    <input type="checkbox" id="private" name="private" value="private"> <br>
+
+    <button type="submit">Create</button>
+  </form>
+
+
+{% endblock %}

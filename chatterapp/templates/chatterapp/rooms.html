@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - list of rooms {% endblock %}
+{% block header %} Chattebox - list of rooms {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h2>List of rooms:</h2>
+  <ul>
+    {% for room in rooms %}
+    <li> <a href="{% url 'room' room.id %}"> {{ room.name }} </a> - {{ room.description }}
+      {% if request.user == room.owner or request.user.is_superuser %}
+        <a href="{% url 'delete_room' room.id %}">delete</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}
