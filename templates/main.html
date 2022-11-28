@@ -10,6 +10,17 @@
 
 <header>{% block header %} {% endblock %}</header>
 
+<!-- vyhledávací pole -->
+{% if request.user.is_authenticated %}
+<div id="search">
+    <form method="post" action="/search/">
+        {% csrf_token %}
+        <label for="search">🔍</label>
+        <input class="text" name="search">
+    </form>
+</div>
+{% endif %}
+
 <!-- navbar -->
 {% include 'navbar.html' %}
 

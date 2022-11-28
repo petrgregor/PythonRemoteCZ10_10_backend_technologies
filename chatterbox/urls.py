@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+import chatterapp.views
 from chatterapp.views import *
 
 urlpatterns = [
@@ -36,8 +37,12 @@ urlpatterns = [
     path('create_room_v3/', RoomFormView.as_view(), name='create_room_v3'),   # 3rd version for creating room
     path('create_room_v4/', RoomCreateView.as_view(), name='create_room_v4'),  # 4rd version for creating room
 
+    path('edit_room/<int:pk>/', chatterapp.views.EditRoom.as_view(), name='edit_room'),
+
     path('delete_room/<int:pk>/', delete_room, name='delete_room'),
     path('delete_room_yes/<int:pk>', delete_room_yes, name='delete_room_yes'),
+
+    path('search/', chatterapp.views.search, name='search'),
 
     # accounts app
     path('accounts/', include('accounts.urls')),             # signup

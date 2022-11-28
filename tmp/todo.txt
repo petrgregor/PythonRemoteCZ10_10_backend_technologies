@@ -1,6 +1,8 @@
 DONE Odesílání a zobrazování zpráv
 DONE Obrázek do zpráv
-Editování místností
+DONE Editování místností
+HW Vyhledávání (v názvu místnosti, popisu a ve zprávách)
+DONE Room - počet zpráv a čas poslední zprávy
 Private místnosti
 Profil uživatele
 Obrázky do profilu
@@ -15,3 +17,5 @@ Friend list
 Přístup do místnosti přes kód bez loginu
 Banování místností nebo uživatelů
 Cenzura slov
+
+?? edit room pouze pro ownera nebo admina

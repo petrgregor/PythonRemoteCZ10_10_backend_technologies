@@ -7,4 +7,5 @@ admin.site.register(Theme)
 admin.site.register(Room)
 admin.site.register(Message)
 admin.site.register(MyUser)
-
+admin.site.register(RequestStatus)
+admin.site.register(LetInRequest)

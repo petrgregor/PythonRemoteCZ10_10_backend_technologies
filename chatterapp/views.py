@@ -2,12 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import FormView, CreateView
+from django.views.generic import UpdateView
 from django import forms
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import FileSystemStorage
 
-from chatterapp.models import Room, Theme, Message, MessageFile
+from chatterapp.models import Room, Theme, Message, MessageFile, LetInRequest, RequestStatus
 
 # Create your views here.
 #def hello(request):
@@ -27,6 +28,22 @@ def home(request):
     #return HttpResponse("Home")
     return render(request, "chatterapp/home.html")
 
+# vyhledávání  (v názvu místnosti, popisu a ve zprávách)
+@login_required
+def search(request):
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        search = search.strip()
+        if len(search) > 0:
+            rooms_name = Room.objects.filter(name__contains=search)
+            # TODO description
+            # TODO messages
+
+            context = {'rooms_name': rooms_name}
+            return render(request, 'chatterapp/search.html', context)
+
+    return redirect('home')
+
 @login_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def rooms(request):
@@ -39,6 +56,18 @@ def rooms(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def room(request, pk):
     room = Room.objects.get(id=pk)
+    show = False
+    if room.private:
+        user = request.user
+        let_in_request = LetInRequest.objects.filter(user=user).filter(room=room)
+        if len(let_in_request) > 0 and let_in_request.status == RequestStatus.objects.get(name='accepted'):
+            show = True
+    else:
+        show = True
+
+    if request.user.is_superuser or request.user == room.owner:
+        show = True
+
     # pokud dostaneme data metodou post (z formuláře) => nová zpráva
     if request.method == 'POST':
         body = request.POST.get('body').strip()
@@ -62,10 +91,13 @@ def room(request, pk):
                     message=message
                 )'''
 
-    # najít zprávy dané místnosti
-    messages = Message.objects.filter(room=pk)
+    if show:
+        # najít zprávy dané místnosti
+        messages = Message.objects.filter(room=pk)
+    else:
+        messages = []
 
-    context = {'room': room, 'messages': messages}
+    context = {'room': room, 'messages': messages, 'show': show}
     return render(request, "chatterapp/room.html", context)
 
 # první metoda pro vytváření nové místnosti pomocí dvou metod:
@@ -156,11 +188,28 @@ class RoomCreateView(CreateView):
     success_url = '/rooms/'
 
 
+# formulář pro editaci místnosti
+class RoomEditForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+
+# view pro editaci místnosti
+@method_decorator(login_required, name='dispatch')
+class EditRoom(UpdateView):
+    # TODO edit room pouze pro ownera nebo admina
+    template_name = 'chatterapp/edit_room.html'
+    model = Room
+    form_class = RoomEditForm
+    success_url = '/rooms/'
+
+
 @login_required
 def delete_room(request, pk):
     try:
-        if request.user == Room.owner or request.user.is_superuser:
-            room = Room.objects.get(id=pk)
+        room = Room.objects.get(id=pk)
+        if request.user == room.owner or request.user.is_superuser:
             context = {'room': room}
             return render(request, 'chatterapp/delete_room.html', context)
         else:

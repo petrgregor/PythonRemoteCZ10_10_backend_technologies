@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - search results {% endblock %}
+{% block header %} Chattebox - search results {% endblock %}
+
+{% block content %}
+  <h2>Results in room name:</h2>
+  <ul>
+    {% for room in rooms_name %}
+      <li>{{ room.name }}</li> <!-- TODO název místnosti klikací -> do dané místnosti-->
+    {% endfor %}
+  </ul>
+  <!-- TODO room description -->
+  <!-- TODO messages -->
+{% endblock %}

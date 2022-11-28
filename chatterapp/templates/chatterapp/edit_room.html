@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - edit room {{ room.name }} {% endblock %}
+{% block header %} Chattebox - edit room {% endblock %}
+
+{% block content %}
+  <h2>Edit room:</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    <table> {{ form.as_table }} </table>
+    <button type="submit">Edit</button>
+  </form>
+{% endblock %}

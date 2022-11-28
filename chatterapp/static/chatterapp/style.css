@@ -20,6 +20,30 @@ nav li {
     margin-right: 40px;
 }
 
+/* search */
+#search {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+/* rooms */
+.delete > a {
+    color: red;
+}
+
+.delete:active > a {
+    color: darkred;
+}
+
+.edit > a {
+    color: blue;
+}
+
+.edit:active > a {
+    color: darkblue;
+}
+
 /* room */
 .my-message {
     border: solid 2px #004666;

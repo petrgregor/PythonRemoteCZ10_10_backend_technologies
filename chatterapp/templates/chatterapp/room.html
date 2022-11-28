@@ -6,7 +6,7 @@
 {% block header %} Chattebox - {{ room.name }} {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
+{% if show %}
   <h2>Room: {{ room.name }}</h2>
   <p>Theme: {{ room.theme }}</p>
   <p>Description: {{ room.description }}</p>
@@ -39,8 +39,15 @@
         <span class="message-user">{{ message.user }}</span>
         <span class="message-created">{{ message.created }}</span>
         <div class="message-body">{{ message.body }}</div>
+        {% if message.file %}
+          <a href="{{ message.file }}"><img src="{{ message.file }}" width="50px"></a>
+        {% endif %}
       </div>
     {% endif %}
   {% endfor %}
+{% else %}
+<!-- TODO zobrazit žádost o přístup -->
+You are not allowed to see this room.
+Do you want access?
 {% endif %}
 {% endblock %}
