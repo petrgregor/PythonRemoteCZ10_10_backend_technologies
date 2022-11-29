@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Chattebox - room requests {% endblock %}
+{% block header %} Chattebox - room requests {% endblock %}
+
+{% block content %}
+  <ul>
+    {% for my_request in my_requests %}
+      <li>
+        <div class="my-request">{{ my_request }}
+          {% if my_request.status == status_denied %}
+            <a href="{% url 'accept_request' my_request.id %}">ACCEPT</a>
+          {% endif %}
+          {% if my_request.status == status_accepted %}
+            <a href="{% url 'deny_request' my_request.id %}">DENY</a>
+          {% endif %}
+          {% if my_request.status == status_pending %}
+            <a href="{% url 'accept_request' my_request.id %}">ACCEPT</a>
+            <a href="{% url 'deny_request' my_request.id %}">DENY</a>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -7,4 +7,12 @@
 
 {% block content %}
   <h2>Welcome in our Chatterbox app.</h2>
+  <!-- pending requests -->
+  <ul>
+  {% for pending_request in pending_requests %}
+    <li>{{ pending_request }}
+      <a href="{% url 'accept_request' pending_request.id %}">ACCEPT</a>
+      <a href="{% url 'deny_request' pending_request.id %}">DENIED</a> </li>
+  {% endfor %}
+  </ul>
 {% endblock %}

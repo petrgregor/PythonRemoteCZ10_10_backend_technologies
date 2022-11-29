@@ -46,8 +46,14 @@
     {% endif %}
   {% endfor %}
 {% else %}
-<!-- TODO zobrazit žádost o přístup -->
-You are not allowed to see this room.
-Do you want access?
+  <!-- zobrazit žádost o přístup -->
+  You are not allowed to see this room.
+  {% if not request_pending %}
+    Do you want access?
+    <span class="private-request-yes"><a href="{% url 'private_request' room.id %}">YES</a></span>
+    <span class="private-request-no"><a href="{% url 'rooms' %}">NO</a></span>
+  {% else %}
+    Your request date: {{ my_request_date }}
+  {% endif %}
 {% endif %}
 {% endblock %}

@@ -7,6 +7,7 @@ from django import forms
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.models import User
 
 from chatterapp.models import Room, Theme, Message, MessageFile, LetInRequest, RequestStatus
 
@@ -26,7 +27,48 @@ def ahoj(request):
 
 def home(request):
     #return HttpResponse("Home")
-    return render(request, "chatterapp/home.html")
+    if request.user.is_authenticated:
+        pending_requests = LetInRequest.objects.filter(room__owner=request.user,
+                                                   status=RequestStatus.objects.get(name='pending'))
+    else:
+        pending_requests = []
+    context = {'pending_requests': pending_requests}
+    return render(request, "chatterapp/home.html", context)
+
+@login_required
+def accept_request(request, pk):
+    '''request_obj = LetInRequest.objects.get(pk=pk)
+    request_obj.status = RequestStatus.objects.get(name='accepted')
+    request_obj.save()
+    return redirect('home')'''
+    my_request = LetInRequest.objects.get(id=pk)
+    my_request.status = RequestStatus.objects.get(name='accepted')
+    my_request.save()
+    return redirect('home')
+
+
+@login_required
+def deny_request(request, pk):
+    '''request_obj = LetInRequest.objects.get(pk=pk)
+    request_obj.status = RequestStatus.objects.get(name='denied')
+    request_obj.save()
+    return redirect('home')'''
+    my_request = LetInRequest.objects.get(id=pk)
+    my_request.status = RequestStatus.objects.get(name='denied')
+    my_request.save()
+    return redirect('home')
+
+
+@login_required
+def private_requests(request):
+    my_requests = LetInRequest.objects.filter(room__owner=request.user)
+    status_denied = RequestStatus.objects.get(name='denied')
+    status_accepted = RequestStatus.objects.get(name='accepted')
+    status_pending = RequestStatus.objects.get(name='pending')
+    context = {'my_requests': my_requests, 'status_denied': status_denied,
+               'status_accepted': status_accepted, 'status_pending': status_pending}
+    return render(request, 'chatterapp/private_requests.html', context)
+
 
 # vyhledávání  (v názvu místnosti, popisu a ve zprávách)
 @login_required
@@ -36,10 +78,15 @@ def search(request):
         search = search.strip()
         if len(search) > 0:
             rooms_name = Room.objects.filter(name__contains=search)
-            # TODO description
-            # TODO messages
+            # description
+            rooms_descr = Room.objects.filter(description__contains=search)
+            # messages
+            messages = Message.objects.filter(body__contains=search)
+            # users
+            users = User.objects.filter(username__contains=search)
 
-            context = {'rooms_name': rooms_name}
+            context = {'rooms_name': rooms_name, 'rooms_descr': rooms_descr, 'messages': messages, 'search': search,
+                       'users': users}
             return render(request, 'chatterapp/search.html', context)
 
     return redirect('home')
@@ -57,11 +104,18 @@ def rooms(request):
 def room(request, pk):
     room = Room.objects.get(id=pk)
     show = False
+    request_pending = False
+    my_request_date = ""
     if room.private:
         user = request.user
-        let_in_request = LetInRequest.objects.filter(user=user).filter(room=room)
-        if len(let_in_request) > 0 and let_in_request.status == RequestStatus.objects.get(name='accepted'):
+        let_in_request = LetInRequest.objects.filter(user=user, room=room, status=RequestStatus.objects.get(name='accepted'))
+        if len(let_in_request) > 0:
             show = True
+        let_in_request_pending = LetInRequest.objects.filter(user=user, room=room,
+                                                     status=RequestStatus.objects.get(name='pending'))
+        if len(let_in_request_pending) > 0:
+            request_pending = True
+            my_request_date = let_in_request_pending[0].created
     else:
         show = True
 
@@ -97,8 +151,20 @@ def room(request, pk):
     else:
         messages = []
 
-    context = {'room': room, 'messages': messages, 'show': show}
+    context = {'room': room, 'messages': messages, 'show': show,
+               'request_pending': request_pending,
+               'my_request_date': my_request_date}
     return render(request, "chatterapp/room.html", context)
+
+@login_required
+def private_request(request, pk):
+    LetInRequest.objects.create(
+        user=request.user,
+        room=Room.objects.get(id=pk),
+        status=RequestStatus.objects.get(name='pending')
+    )
+
+    return redirect('rooms')
 
 # první metoda pro vytváření nové místnosti pomocí dvou metod:
 # 1. zobrazí se formulář pomocí new_room

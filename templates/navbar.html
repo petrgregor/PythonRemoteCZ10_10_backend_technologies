@@ -7,6 +7,7 @@
         {% if request.user.is_authenticated %}
           <li><a href="{% url 'rooms' %}">Rooms</a></li>
           <li><a href="{% url 'create_room_v2' %}">Create room</a></li>
+          <li><a href="{% url 'private_requests' %}">Private requests</a></li>
           <li class="last-item">{{ request.user.username }}</li>
           <li class="last-item"><a href="{% url 'logout' %}">Logout</a></li>
         {% endif %}

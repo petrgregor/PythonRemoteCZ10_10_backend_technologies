@@ -1,10 +1,11 @@
 DONE Odesílání a zobrazování zpráv
 DONE Obrázek do zpráv
 DONE Editování místností
-HW Vyhledávání (v názvu místnosti, popisu a ve zprávách)
+DONE Vyhledávání (v názvu místnosti, popisu a ve zprávách)
 DONE Room - počet zpráv a čas poslední zprávy
-Private místnosti
-Profil uživatele
+DONE Private místnosti
+Vyřešit více žádostí od jednoho uživatele do jedné místnosti (mazat staré žádosti)
+Pr
 Obrázky do profilu
 Změnit tvar __str__ u message
 Editovat zprávu ?

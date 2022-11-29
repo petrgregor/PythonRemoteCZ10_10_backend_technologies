@@ -31,6 +31,12 @@ urlpatterns = [
     path('', home, name='home'),        # empty path (home)
     path('rooms/', rooms, name='rooms'),
     path('room/<int:pk>/', room, name='room'),
+
+    path('private_request/<int:pk>/', private_request, name='private_request'),
+    path('accept_request/<int:pk>/', accept_request, name='accept_request'),
+    path('deny_request/<int:pk>/', deny_request, name='deny_request'),
+    path('private_requests/', private_requests, name='private_requests'),
+
     path('new_room/', new_room, name='new_room'),                   # 1st version for creating room
     path('create_room/', create_room, name='create_room'),          # 1st version for creating room
     path('create_room_v2/', create_room_v2, name='create_room_v2'), # 2st version for creating room
