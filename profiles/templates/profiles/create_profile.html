@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %} Create new profile {% endblock %}
+{% block header %} Create new profile {% endblock %}
+
+{% block content %}
+  <div class="create_profile">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="avatar">Avatar:</label>
+        <input type="file" name="avatar" id="avatar" accept="image/*"> <br>
+        <label for="first_name">First name:</label>
+        <input type="text" name="first_name" id="first_name"> <br>
+        <label for="last_name">Last name:</label>
+        <input type="text" name="last_name" id="last_name"> <br>
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email"> <br>
+        <label for="about_me">About me:</label>
+        <input type="text" name="about_me" id="about_me"> <br>
+        <label for="birth_date">Birth date:</label>
+        <input type="date" id="birth_date" name="birth_date"> <br>
+        <button type="submit">Create</button>
+      </form>
+  </div>
+{% endblock %}

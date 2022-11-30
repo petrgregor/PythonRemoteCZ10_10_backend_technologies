@@ -10,6 +10,7 @@
     {% for my_request in my_requests %}
       <li>
         <div class="my-request">{{ my_request }}
+          created: {{ my_request.created }}
           {% if my_request.status == status_denied %}
             <a href="{% url 'accept_request' my_request.id %}">ACCEPT</a>
           {% endif %}

@@ -22,11 +22,12 @@ from django.conf.urls.static import static
 
 import chatterapp.views
 from chatterapp.views import *
+import profiles.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello, name='hello'),
-    path('hello/<str:name>', hello, name='hello2'),
+    path('hello/<str:name>/', hello, name='hello2'),
     path('ahoj/', ahoj, name='ahoj'),
     path('', home, name='home'),        # empty path (home)
     path('rooms/', rooms, name='rooms'),
@@ -46,7 +47,7 @@ urlpatterns = [
     path('edit_room/<int:pk>/', chatterapp.views.EditRoom.as_view(), name='edit_room'),
 
     path('delete_room/<int:pk>/', delete_room, name='delete_room'),
-    path('delete_room_yes/<int:pk>', delete_room_yes, name='delete_room_yes'),
+    path('delete_room_yes/<int:pk>/', delete_room_yes, name='delete_room_yes'),
 
     path('search/', chatterapp.views.search, name='search'),
 
@@ -54,4 +55,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),             # signup
     path('accounts/', include('django.contrib.auth.urls')),  # login, logout, password_change,...
     path('accounts/profile/', rooms),
+
+    # profiles app
+    path('profile/<int:pk>/', profiles.views.profile, name='profile'),
+    path('create_profile/', profiles.views.create_profile, name='create_profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

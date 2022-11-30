@@ -158,12 +158,17 @@ def room(request, pk):
 
 @login_required
 def private_request(request, pk):
+    room = Room.objects.get(id=pk)
+    all_room_requests = LetInRequest.objects.filter(user=request.user, room=room)
+    for room_request in all_room_requests:
+    #     if room_request.user == request.user and room_request.room == room:
+        room_request.delete()
+
     LetInRequest.objects.create(
         user=request.user,
-        room=Room.objects.get(id=pk),
+        room=room,
         status=RequestStatus.objects.get(name='pending')
     )
-
     return redirect('rooms')
 
 # první metoda pro vytváření nové místnosti pomocí dvou metod:

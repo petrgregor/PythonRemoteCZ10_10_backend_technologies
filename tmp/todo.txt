@@ -4,9 +4,12 @@ DONE Editování místností
 DONE Vyhledávání (v názvu místnosti, popisu a ve zprávách)
 DONE Room - počet zpráv a čas poslední zprávy
 DONE Private místnosti
-Vyřešit více žádostí od jednoho uživatele do jedné místnosti (mazat staré žádosti)
-Pr
-Obrázky do profilu
+DONE Vyřešit více žádostí od jednoho uživatele do jedné místnosti (mazat staré žádosti)
+DONE Profil uživatele - nová aplikace
+DONE Obrázky do profilu
+ošetřit nevyplněné datum
+edit_profile
+možnost definovat jednotlivé položky z profilu jako private
 Změnit tvar __str__ u message
 Editovat zprávu ?
 Template pro zobrazení obrázku (pro vrácení zpět stačí kamkoliv kliknout)
