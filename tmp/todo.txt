@@ -22,4 +22,6 @@ Přístup do místnosti přes kód bez loginu
 Banování místností nebo uživatelů
 Cenzura slov
 
+REST Api
+
 ?? edit room pouze pro ownera nebo admina
