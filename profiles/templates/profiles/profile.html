@@ -1,24 +1,65 @@
 {% extends 'main.html' %}
 
-{% load static %}
+{% load static%}
 
-{% block title %} Profile - {{ profile.user.username }} {% endblock %}
-{% block header %} Profile - {{ profile.user.username }} {% endblock %}
+{% block title %}
+Chatterbox - profile {{ profile.user.username }}
+{% endblock %}
+
+{% block header %}
+Chatterbox - profile {{ profile.user.username }}
+{% endblock %}
 
 {% block content %}
-  <div class="profile">
-      <h1>{{ profile.user.username }}</h1>
-      <div class="avatar">
-        <img src="{{ profile.avatar }}" width="100px">
-      </div>
-      <div class="profile-info">
-          First name: {{ profile.user.first_name }} <br>
-          Last name: {{ profile.user.last_name }} <br>
-          E-mail: {{ profile.user.email }} <br>
-          About me: {{ profile.about_me }} <br>
-          Birth date: {{ profile.birth_date }} <br>
-          Signed up: {{ profile.user.date_joined }} <br>
-          Last online: {{ profile.user.last_login }} <br>
-      </div>
-  </div>
+    <div class="profile">
+        <h1>{{ profile.user.username }}</h1>
+        <div class="avatar">
+            {% if profile.avatar == "" %}
+                Avatar: <img src="/media/default.png" width="100px">
+            {% else %}
+                Avatar: <img src="{{ profile.avatar }}" width="100px">
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            {% if not profile.first_name_private %}
+                Firstname: {{ profile.user.first_name }} <br>
+            {% else %}
+                Firstname: private <br>
+            {% endif %}
+
+            {% if not profile.last_name_private %}
+                Lastname: {{ profile.user.last_name }} <br>
+            {% else %}
+                Lastname: private <br>
+            {% endif %}
+
+            {% if not profile.email_private %}
+                Email: {{ profile.user.email }} <br>
+            {% else %}
+                Email: private <br>
+            {% endif %}
+
+            {% if not profile.about_me_private %}
+                About me: {{ profile.user.about_me }} <br>
+            {% else %}
+                About me: private <br>
+            {% endif %}
+
+            {% if not profile.birth_date_private %}
+                {% if profile.birth_date == None %}
+                    Birth date: unknown <br>
+                {% else %}
+                    Birth date: {{ profile.birth_date }} <br>
+                {% endif %}
+            {% else %}
+                Birth date: private <br>
+            {% endif %}
+
+            Signed up: {{ profile.user.date_joined }} <br>
+            Last online: {{ profile.user.last_login}} <br>
+        </div>
+        {% if profile.user == request.user %}
+            <a href="{% url 'edit_profile' %}">Edit profile</a>
+        {% endif %}
+    </div>
 {% endblock %}

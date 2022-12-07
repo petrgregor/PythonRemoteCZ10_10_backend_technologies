@@ -7,9 +7,10 @@ DONE Private místnosti
 DONE Vyřešit více žádostí od jednoho uživatele do jedné místnosti (mazat staré žádosti)
 DONE Profil uživatele - nová aplikace
 DONE Obrázky do profilu
-ošetřit nevyplněné datum
-edit_profile
-možnost definovat jednotlivé položky z profilu jako private
+DONE ošetřit nevyplněné datum
+DONE nastavit default avatar
+DONE edit_profile
+DONE možnost definovat jednotlivé položky z profilu jako private
 Změnit tvar __str__ u message
 Editovat zprávu ?
 Template pro zobrazení obrázku (pro vrácení zpět stačí kamkoliv kliknout)
@@ -21,7 +22,6 @@ Friend list
 Přístup do místnosti přes kód bez loginu
 Banování místností nebo uživatelů
 Cenzura slov
-
-REST Api
+DONE Rozkliknutelný profil ostatních uživatelů
 
 ?? edit room pouze pro ownera nebo admina

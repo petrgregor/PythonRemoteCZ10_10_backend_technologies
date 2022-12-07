@@ -5,14 +5,21 @@
         <li><a href="{% url 'home' %}">Home</a></li>
 
         {% if request.user.is_authenticated %}
-          <li><a href="{% url 'rooms' %}">Rooms</a></li>
-          <li><a href="{% url 'create_room_v2' %}">Create room</a></li>
-          <li><a href="{% url 'private_requests' %}">Private requests</a></li>
-          <li class="last-item">{{ request.user.username }}</li>
-          <li class="last-item"><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'rooms' %}">Rooms</a></li>
+            <li><a href="{% url 'create_room_v2' %}">Createroom</a></li>
+            <!--<li><a href="{% url 'new_room' %}">Createroom</a></li>
+            <li><a href="{% url 'create_room_v3' %}">Createroom v3.0</a></li>
+            <li><a href="{% url 'create_room_v4' %}">Createroom v4.0</a></li>-->
+            <li><a href="{% url 'private_requests' %}">Private_requests</a></li>
+            {% if user.profile.id %}
+                <li class="last-item"><a href="{% url 'profile' user.profile.id %}">{{ request.user.username }}</a></li>
+            {% else %}
+                <li class="last-item"><a href="{% url 'create_profile' %}">{{ request.user.username }}</a></li>
+            {% endif %}
+            <li class="last-item"><a href="{% url 'logout' %}">Logout</a></li>
         {% endif %}
         {% if not request.user.is_authenticated %}
-          <li class="last-item"><a href="{% url 'login' %}">Login</a></li>
+            <li class="last-item"><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
     </ul>
 </nav>

@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+
+{% load static%}
+
+{% block title %}
+Chatterbox - Edit profile
+{% endblock %}
+
+{% block header %}
+Chatterbox - Edit profile
+{% endblock %}
+
+{% block content %}
+  <div class="edit-profile">
+    <form enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      <div class="avatar">
+        Avatar: <img src="{{ profile.avatar }}" width="100 px">
+        <label for="delete_avatar">Delete avatar: </label>
+        <input type="checkbox" id="delete_avatar" name="delete_avatar">
+      </div>
+
+      <label for="avatar">Avatar:</label>
+      <input type="file" name="avatar" id="avatar" accept="image/*"> <br>
+
+      <label for="first_name_private">Private: </label>
+      {% if profile.first_name_private %}
+        <input type="checkbox" id="first_name_private" name="first_name_private" checked>
+      {% else %}
+        <input type="checkbox" id="first_name_private" name="first_name_private">
+      {% endif %}
+      <label for="first_name">First name:</label>
+      <input type="text" name="first_name" id="first_name" value="{{ request.user.first_name }}"> <br>
+
+      <label for="last_name_private">Private: </label>
+      {% if profile.last_name_private %}
+        <input type="checkbox" id="last_name_private" name="last_name_private" checked>
+      {% else %}
+        <input type="checkbox" id="last_name_private" name="last_name_private">
+      {% endif %}
+      <label for="last_name">Last name:</label>
+      <input type="text" name="last_name" id="last_name" value="{{ request.user.last_name }}"> <br>
+
+      <label for="email_private">Private: </label>
+      {% if profile.email_private %}
+        <input type="checkbox" id="email_private" name="email_private" checked>
+      {% else %}
+        <input type="checkbox" id="email_private" name="email_private">
+      {% endif %}
+      <label for="email">E-mail:</label>
+      <input type="text" name="email" id="email" value="{{ request.user.email }}"> <br>
+
+      <label for="about_me_private">Private: </label>
+      {% if profile.about_me_private %}
+        <input type="checkbox" id="about_me_private" name="about_me_private" checked>
+      {% else %}
+        <input type="checkbox" id="about_me_private" name="about_me_private">
+      {% endif %}
+      <label for="about_me">About me:</label>
+      <input type="text" name="about_me" id="about_me" value="{{ profile.about_me }}"> <br>
+
+      <label for="birth_date_private">Private: </label>
+      {% if profile.birth_date_private %}
+        <input type="checkbox" id="birth_date_private" name="birth_date_private" checked>
+      {% else %}
+        <input type="checkbox" id="birth_date_private" name="birth_date_private">
+      {% endif %}
+      <label for="birth_date">Birth date:</label>
+      {{ profile.birth_date }}
+      <input type="date" name="birth_date" id="birth_date" value="{{ profile.birth_date }}"> <br>
+
+      <button type="submit">Save changes</button>
+    </form>
+  </div>
+{% endblock %}

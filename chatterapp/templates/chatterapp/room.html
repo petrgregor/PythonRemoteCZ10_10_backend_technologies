@@ -11,7 +11,11 @@
   <p>Theme: {{ room.theme }}</p>
   <p>Description: {{ room.description }}</p>
   <p>Private: {{ room.private }}</p>
-  <p>Owner: {{ room.owner }}</p>
+  {% if room.owner.profile.id %}
+    <p>Owner: <a href="{% url 'profile' room.owner.profile.id %}">{{ room.owner }}</a></p>
+  {% else %}
+    <p>Owner: {{ room.owner }}</p>
+  {% endif %}
   <p>Created: {{ room.created }}</p>
   <p>Updated: {{ room.updated }}</p>
 
@@ -36,7 +40,11 @@
       </div>
     {% else %}
       <div class="other-message">
-        <span class="message-user">{{ message.user }}</span>
+        {% if message.user.profile.id %}
+          <span class="message-user"><a href="{% url 'profile' message.user.profile.id %}">{{ message.user }}</a></span>
+        {% else %}
+          <span class="message-user">{{ message.user }}</span>
+        {% endif %}
         <span class="message-created">{{ message.created }}</span>
         <div class="message-body">{{ message.body }}</div>
         {% if message.file %}
@@ -46,7 +54,6 @@
     {% endif %}
   {% endfor %}
 {% else %}
-  <!-- zobrazit žádost o přístup -->
   You are not allowed to see this room.
   {% if not request_pending %}
     Do you want access?

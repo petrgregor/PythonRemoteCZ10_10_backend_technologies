@@ -59,4 +59,6 @@ urlpatterns = [
     # profiles app
     path('profile/<int:pk>/', profiles.views.profile, name='profile'),
     path('create_profile/', profiles.views.create_profile, name='create_profile'),
+    path('edit_profile/', profiles.views.edit_profile, name='edit_profile'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
