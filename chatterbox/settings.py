@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'chatterapp',  # our new application
     'accounts',
     'profiles',
+    'api',
 ]
 
 MIDDLEWARE = [

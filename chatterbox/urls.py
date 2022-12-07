@@ -20,6 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+import api.views
 import chatterapp.views
 from chatterapp.views import *
 import profiles.views
@@ -60,5 +61,11 @@ urlpatterns = [
     path('profile/<int:pk>/', profiles.views.profile, name='profile'),
     path('create_profile/', profiles.views.create_profile, name='create_profile'),
     path('edit_profile/', profiles.views.edit_profile, name='edit_profile'),
+
+    # api
+    path('api/hello_world/', api.views.hello_world),
+    path('api/rooms/', api.views.rooms),
+    path('api/room/<int:pk>/', api.views.room),
+    path('api/messages/<int:pk>/', api.views.messages),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
